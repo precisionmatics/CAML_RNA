@@ -1258,7 +1258,7 @@ body(doc,
      'The 143-complex RNA–ligand dataset, all pre-computed feature arrays '
      '(ES+CS Betti curves, CPF, RNA-FM embeddings), out-of-fold prediction '
      'files, trained model pipelines, and all analysis scripts (Steps 1–33) '
-     'are available at https://github.com/[repository]. '
+     'are available at https://github.com/precisionmatics/CAML_RNA. '
      'The NA-L nucleic acid–ligand database from which the dataset derives '
      'is available at http://[na-l-database-url].',
      first_para=True)
