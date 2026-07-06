@@ -4,7 +4,7 @@ CAML-RNA manuscript — Word DOCX for Molecular Informatics (Wiley).
 Formatting:
   - Times New Roman 12 pt, 1.5-line spacing
   - 1.25" left / 1" right / 1.25" top / 1" bottom margins
-  - First-line indent 0.5" — NO blank space between body paragraphs
+  - No first-line indent; no blank space between body paragraphs
   - Numbered citations [1] inline; full reference list at end
   - Tables: Table Grid style, NO cell shading
   - Figures: embedded within section after first mention, NOT before Introduction
@@ -713,7 +713,7 @@ body(doc,
      'and, for riboswitches, by ligand class '
      '(SAM/SAH, purine, FMN/FAD, TPP, other-ligand). '
      'Three-dimensional structures were obtained from the RCSB Protein Data '
-     'Bank [29,30] (PDB); ligand structures were parsed as SDF files with RDKit. [31] '
+     'Bank [29] (PDB); ligand structures were parsed as SDF files with RDKit. [30] '
      'Structures with missing heavy-atom coordinates or unresolvable atom types '
      'were excluded. Physicochemical properties (molecular weight, H-bond '
      'donors/acceptors, topological polar surface area, ring count, rotatable '
@@ -743,7 +743,7 @@ body(doc,
 section(doc, 'Mathematical Background: Persistent Homology and Stanley–Reisner Theory', numbered='3.3', level=2)
 
 body(doc,
-     'CAML-RNA employs persistent homology (PH) [32,33] as its computational framework '
+     'CAML-RNA employs persistent homology (PH) [23,31] as its computational framework '
      'for extracting multi-scale topological features from RNA–ligand structural data. '
      'Stanley–Reisner (SR) theory provides the algebraic foundation that motivates '
      'the bipartite element-specific descriptor design. '
@@ -778,7 +778,7 @@ body(doc,
      'and die (classes become boundaries); the resulting Betti curves '
      '{β₀(r)}ᵣ and {β₁(r)}ᵣ over a discrete filtration grid encode the '
      'multi-scale topology of the point cloud. '
-     'In CAML-RNA, Ripser [34] computes β₀(r) and β₁(r) at 54 equally spaced '
+     'In CAML-RNA, Ripser [32] computes β₀(r) and β₁(r) at 54 equally spaced '
      'radii r ∈ [0, 12] Å on bipartite RNA–ligand atom coordinate sets. '
      'These Betti curves are the primary feature representation of CAML-RNA.')
 body(doc,
@@ -970,7 +970,7 @@ eq(doc,
    ' ∪ {u ∈ Vᴸᴵᶢ | type(u) = β},  r )',
    21)
 body(doc,
-     'Ripser [34] computes the persistent Betti numbers β0 and β1 across '
+     'Ripser [32] computes the persistent Betti numbers β0 and β1 across '
      '54 equally spaced filtration levels r ∈ [0, 12] Å. '
      'Concatenating the Betti curves over all 40 element pairs yields the ES '
      'feature vector of dimension 40 × 2 × 54 = 4,320.')
@@ -1001,7 +1001,7 @@ body(doc,
      'representing aromatic/hydrophobic (Lᵃʳ), hydrogen-bond donor '
      '(Lʰᵇᵈ), hydrogen-bond acceptor (Lʰᵇᵃ), '
      'and aliphatic (Lᵃᴸᵢ) atoms, respectively. '
-     'Category assignments use SMARTS-based pattern matching (RDKit). [31] '
+     'Category assignments use SMARTS-based pattern matching (RDKit). [30] '
      'For each of the 3 × 4 = 12 category pairs, '
      'a category-specific bipartite complex is constructed analogously to '
      'Equation 21, producing an additional '
@@ -1029,7 +1029,7 @@ body(doc,
 
 body(doc,
      'RNA Foundation Model Embeddings (RNA-FM, 640-dim).  '
-     'RNA-FM [35] is a 100M-parameter bidirectional transformer pretrained on '
+     'RNA-FM [33] is a 100M-parameter bidirectional transformer pretrained on '
      '23.7 million non-redundant RNA sequences. Per-residue embeddings from the '
      'final encoder layer are average-pooled across the RNA sequence, yielding '
      'a 640-dimensional global fold embedding. RNA-FM embeddings capture '
@@ -1039,7 +1039,7 @@ body(doc,
 body(doc,
      'Morgan Fingerprints (ECFP4, 1024-bit).  '
      'Ligand structures are encoded as 1024-bit Morgan radius-2 (ECFP4) '
-     'fingerprints [36] computed with RDKit [31] using relaxed atom sanitization '
+     'fingerprints [34] computed with RDKit [30] using relaxed atom sanitization '
      'to accommodate metal-coordinated and modified ligands.')
 
 body(doc,
@@ -1055,13 +1055,13 @@ body(doc,
 section(doc, 'Machine Learning Modeling', numbered='3.6', level=2)
 
 body(doc,
-     'We employ support vector regression [37] with a radial basis function (RBF) kernel',
+     'We employ support vector regression [35] with a radial basis function (RBF) kernel',
      first_para=True)
 eq(doc,
    'K(x, x′)  =  exp( −γ ‖x − x′‖² )',
    24)
 body(doc,
-     'implemented via scikit-learn [38] throughout CAML-RNA. SVR-RBF is well-suited '
+     'implemented via scikit-learn [36] throughout CAML-RNA. SVR-RBF is well-suited '
      'to datasets of the size considered here (n = 143): unlike '
      'gradient-boosted trees or deep neural networks, SVR achieves strong '
      'generalization with a small number of effective parameters and remains '
@@ -1261,7 +1261,7 @@ body(doc,
      'files, trained model pipelines, and all analysis scripts (Steps 1–33) '
      'are available at https://github.com/precisionmatics/CAML_RNA. '
      'The NA-L nucleic acid–ligand database from which the dataset derives '
-     'is available at http://[na-l-database-url].',
+     'is available at https://www.pdbbind.org.cn/.',
      first_para=True)
 
 # ═════════════════════════════════════════════════════════════════════════════
@@ -1286,7 +1286,7 @@ refs = [
 
     '[8]  Warner, K. D.; Hajdin, C. E.; Weeks, K. M. Principles for Targeting RNA with Drug-Like Small Molecules. Nat. Rev. Drug Discov. 2018, 17, 547–558.',
 
-    '[9]  Luo, J.; Wei, W.; Waldisphül, J.; Moitessier, N. Challenges and Current Status of Computational Methods for Docking Small Molecules to Nucleic Acids. Eur. J. Med. Chem. 2019, 168, 414–425.',
+    '[9]  Luo, J.; Wei, W.; Waldispühl, J.; Moitessier, N. Challenges and Current Status of Computational Methods for Docking Small Molecules to Nucleic Acids. Eur. J. Med. Chem. 2019, 168, 414–425.',
 
     '[10]  Chen, L. et al. Computational Prediction of RNA–Ligand Interactions: A Survey and Outlook. Brief. Bioinform. 2022, 23, bbac085.',
 
@@ -1296,15 +1296,15 @@ refs = [
 
     '[13]  Guillemot, J. C. et al. Scoring Functions for RNA–Ligand Binding Affinity: New Developments and Challenges. J. Comput.-Aided Mol. Des. 2024, 38, 19.',
 
-    '[14]  [Author(s)]. AffiGrapher: Graph Neural Network-Based RNA–Ligand Binding Affinity Prediction. [Journal] 2023, [vol], [pages].',
+    '[14]  Wang, J.; Wu, J.; Zhang, Z.; Jiang, Y.; Peng, L.; Zhang, B.; Chen, Q.; Cao, L.; Quan, L.; Lyu, Q. AffiGrapher: Contrastive Heterogeneous Graph Learning with Aromatic Virtual Nodes for RNA–Small Molecule Binding Affinity Prediction. J. Chem. Inf. Model. 2025, DOI: 10.1021/acs.jcim.5c00798.',
 
     '[15]  Kuzmin, M. et al. 3D Graph Neural Networks for RNA Secondary Structure-Based Ligand Binding Prediction. J. Chem. Inf. Model. 2021, 61, 1937–1950.',
 
     '[16]  Zhou, G. et al. GraphDTA: Predicting Drug–Target Binding Affinity with Graph Neural Networks. Bioinformatics 2020, 37, 1140–1147.',
 
-    '[17]  [Author(s)]. RSAPred: RNA Secondary Structure-Aware Affinity Prediction. [Journal] 2022, [vol], [pages].',
+    '[17]  Krishnan, S. R.; Roy, A.; Gromiha, M. M. Reliable Method for Predicting the Binding Affinity of RNA–Small Molecule Interactions Using Machine Learning. Brief. Bioinform. 2024, 25, bbae002.',
 
-    '[18]  [Author(s)]. RLASIF: RNA–Ligand Binding Affinity Prediction via Structural Interface Fingerprints. [Journal] 2023, [vol], [pages].',
+    '[18]  Xia, W.; Shu, J.; Sang, C.; Wang, K.; Wang, Y.; Sun, T.; Xu, X. The Prediction of RNA–Small-Molecule Ligand Binding Affinity Based on Geometric Deep Learning. Comput. Biol. Chem. 2025, 115, 108367.',
 
     '[19]  Suwayyid, F.; Wei, G.-W. Persistent Stanley–Reisner Theory for Topological Data Analysis. J. Chem. Theory Comput. 2024, 20, 1248–1264.',
 
@@ -1320,33 +1320,30 @@ refs = [
 
     '[25]  Cang, Z.; Wei, G.-W. TopologyNet: Topology Based Deep Convolutional and Multi-Task Neural Networks for Biomolecular Property Predictions. PLoS Comput. Biol. 2017, 13, e1005690.',
 
-    '[26]  [Author(s)]. NA-L: Curated Database of Nucleic Acid–Ligand Binding Affinities. [Journal] 2020, [vol], [pages].',
+    '[26]  Wang, R.; Fang, X.; Lu, Y.; Wang, S. The PDBbind Database: Collection of Binding Affinities for Protein–Ligand Complexes with Known Three-Dimensional Structures. J. Med. Chem. 2004, 47, 2977–2980.',
 
-    '[27]  [Author(s)]. RLaffinity: Reinforcement Learning-Augmented RNA–Ligand Affinity Scoring. [Journal] 2022, [vol], [pages].',
+    '[27]  Sun, S.; Gao, L. Contrastive Pre-Training and 3D Convolution Neural Network for RNA and Small Molecule Binding Affinity Prediction. Bioinformatics 2024, 40, btae155.',
 
-    '[28]  [Author(s)]. DeepRSMA: Deep Learning for RNA–Small Molecule Affinity Prediction. [Journal] 2023, [vol], [pages].',
+    '[28]  Huang, Z.; Wang, Y.; Chen, S.; Tan, Y. S.; Deng, L.; Wu, M. DeepRSMA: A Cross-Fusion-Based Deep Learning Method for RNA–Small Molecule Binding Affinity Prediction. Bioinformatics 2024, 40, btae678.',
 
     '[29]  Rose, P. W. et al. The RCSB Protein Data Bank: Views of Structural Biology for Basic and Applied Research and Education. Nucleic Acids Res. 2015, 44, D457–D466.',
 
-    '[30]  Rose, P. W. et al. The RCSB Protein Data Bank. Nucleic Acids Res. 2015, 44, D457–D466.',
+    '[30]  Landrum, G. RDKit: Open-Source Cheminformatics. https://www.rdkit.org, 2013.',
 
-    '[31]  Landrum, G. RDKit: Open-Source Cheminformatics. https://www.rdkit.org, 2013.',
+    '[31]  Zomorodian, A.; Carlsson, G. Computing Persistent Homology. Discrete Comput. Geom. 2005, 33, 249–274.',
 
-    '[32]  Edelsbrunner, H.; Letscher, D.; Zomorodian, A. Topological Persistence and Simplification. Discrete Comput. Geom. 2002, 28, 511–533.',
+    '[32]  Bauer, U. Ripser: Efficient Computation of Vietoris–Rips Persistence Barcodes. J. Appl. Comput. Topol. 2021, 5, 391–423.',
 
-    '[33]  Zomorodian, A.; Carlsson, G. Computing Persistent Homology. Discrete Comput. Geom. 2005, 33, 249–274.',
+    '[33]  Chen, J. et al. Interpretable RNA Foundation Model from Unannotated Data for Highly Accurate RNA Structure and Function Predictions. arXiv 2022, 2204.00300.',
 
-    '[34]  Bauer, U. Ripser: Efficient Computation of Vietoris–Rips Persistence Barcodes. J. Appl. Comput. Topol. 2021, 5, 391–423.',
+    '[34]  Rogers, D.; Hahn, M. Extended-Connectivity Fingerprints. J. Chem. Inf. Model. 2010, 50, 742–754.',
 
-    '[35]  Chen, J. et al. Interpretable RNA Foundation Model from Unannotated Data for Highly Accurate RNA Structure and Function Predictions. arXiv 2022, 2204.00300.',
+    '[35]  Cortes, C.; Vapnik, V. Support-Vector Networks. Mach. Learn. 1995, 20, 273–297.',
 
-    '[36]  Rogers, D.; Hahn, M. Extended-Connectivity Fingerprints. J. Chem. Inf. Model. 2010, 50, 742–754.',
-
-    '[37]  Cortes, C.; Vapnik, V. Support-Vector Networks. Mach. Learn. 1995, 20, 273–297.',
-
-    '[38]  Pedregosa, F. et al. Scikit-learn: Machine Learning in Python. J. Mach. Learn. Res. 2011, 12, 2825–2830.',
+    '[36]  Pedregosa, F. et al. Scikit-learn: Machine Learning in Python. J. Mach. Learn. Res. 2011, 12, 2825–2830.',
 
 ]
+
 for ref in refs:
     p = doc.add_paragraph()
     _set_spacing(p, 1, 2, 1.0)
