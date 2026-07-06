@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.DS_Store
+CAML-RNA_revised.docx
+caml-commutative-algebra-machine-learning-a-case-study-on-protein-ligand-binding-affinity-prediction.pdf
+scripts/fix_audit.py
