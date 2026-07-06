@@ -269,7 +269,7 @@ def make_fig3():
     ax.set_xlim(0, 1.08)
     ax.set_title('(a)  Per-Subtype Performance: Baseline vs. Final',
                  loc='left', fontsize=9, fontweight='bold')
-    ax.legend(frameon=False, fontsize=8.0, loc='lower right')
+    ax.legend(frameon=False, fontsize=8.0, loc='upper right')
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
     ax.axvline(0, color='#aaaaaa', lw=0.5)
@@ -285,15 +285,16 @@ def make_fig3():
     dr_min = min(dr)
     dr_max = max(dr)
     for i, (val, col) in enumerate(zip(dr, col_dr)):
-        # Place label to the right for positive, to the left for negative
         if val >= 0:
-            ax2.text(val + 0.005, y_pos[i],
-                     f'+{val:.3f}', va='center', fontsize=7.5,
+            # Label outside (right) of positive bar
+            ax2.text(val + 0.008, y_pos[i],
+                     f'+{val:.3f}', va='center', ha='left', fontsize=7.5,
                      fontweight='bold', color='#145214')
         else:
-            ax2.text(val - 0.005, y_pos[i],
-                     f'{val:.3f}', va='center', fontsize=7.5,
-                     ha='right', color='#aa0000')
+            # Label outside (left) of negative bar — clear of bar
+            ax2.text(val - 0.018, y_pos[i],
+                     f'{val:.3f}', va='center', ha='right', fontsize=7.5,
+                     fontweight='bold', color='#aa0000')
 
     ax2.set_yticks(y_pos)
     ax2.set_yticklabels(y_labels, fontsize=8.5)
@@ -303,9 +304,10 @@ def make_fig3():
     ax2.spines['top'].set_visible(False)
     ax2.spines['right'].set_visible(False)
     ax2.axvline(0, color='#444444', lw=0.8)
-    # Proper xlim that accommodates negative values
-    pad = 0.04
-    ax2.set_xlim(dr_min - pad, dr_max + pad + 0.06)
+    # xlim: enough room left for negative labels and right for positive labels
+    pad_l = 0.10
+    pad_r = 0.10
+    ax2.set_xlim(dr_min - pad_l, dr_max + pad_r)
     ax2.xaxis.grid(True, alpha=0.25, lw=0.5)
     ax2.set_axisbelow(True)
 
@@ -313,8 +315,9 @@ def make_fig3():
         mpatches.Patch(facecolor=GREEN, label='Improvement (ΔR > 0)'),
         mpatches.Patch(facecolor=RED,   label='Degradation (ΔR < 0)'),
     ]
+    # Place legend at upper right, away from all bars
     ax2.legend(handles=legend_el, frameon=False, fontsize=7.5,
-               loc='lower right')
+               loc='upper right')
 
     fig.tight_layout(w_pad=3.5)
     fig.savefig(f"{FIG_DIR}/fig3_subtype_analysis.pdf", dpi=300)
@@ -447,7 +450,7 @@ def make_fig5():
     x      = np.arange(len(labels))
     colors = [RED if i == len(labels) - 1 else BLUE for i in x]
 
-    fig, ax = plt.subplots(figsize=(9.0, 4.0))
+    fig, ax = plt.subplots(figsize=(9.5, 5.0))
     bars = ax.bar(x, rs, color=colors, edgecolor='#333333',
                   linewidth=0.5, width=0.62, zorder=3)
     ax.plot(x, rs, 'o-', color='#111111', lw=1.1, ms=4, zorder=4)
@@ -459,11 +462,12 @@ def make_fig5():
                 color='#aa0000' if colors[i] == RED else '#222222')
 
     ax.set_xticks(x)
-    ax.set_xticklabels(labels, fontsize=8.0, ha='center')
+    ax.set_xticklabels(labels, fontsize=8.0, ha='right', rotation=20,
+                       rotation_mode='anchor')
     ax.set_ylabel('Pearson R  (LOO-CV)', fontsize=9)
     # NO ax.set_title — title removed as requested
     ax.set_ylim(0.48, 0.82)
-    ax.set_xlim(-0.7, len(labels) - 0.3)
+    ax.set_xlim(-0.7, len(labels) - 0.1)
     ax.spines['top'].set_visible(False)
     ax.spines['right'].set_visible(False)
     ax.yaxis.grid(True, alpha=0.3, lw=0.6, color='#dddddd')
@@ -476,6 +480,7 @@ def make_fig5():
     ax.legend(handles=legend_el, frameon=False, fontsize=8.5, loc='upper left')
 
     fig.tight_layout()
+    fig.subplots_adjust(bottom=0.22)
     fig.savefig(f"{FIG_DIR}/fig5_ablation.pdf", dpi=300)
     fig.savefig(f"{FIG_DIR}/fig5_ablation.png", dpi=300)
     plt.close(fig)
